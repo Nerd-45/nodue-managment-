@@ -7,28 +7,28 @@
     header('location:student-profile.php');
   }
   if(isset($_POST['submit'])){
-  	$roll = mysql_real_escape_string(stripslashes($_POST['roll']));
-  	$query1 = mysql_query("select * from email where roll='$roll'",$connection);
-  	if(mysql_num_rows($query1)==0){
+  	$roll = mysqli_real_escape_string($connection,stripslashes($_POST['roll']));
+  	$query1 = mysqli_query($connection,"select * from email where roll='$roll'");
+  	if(mysqli_num_rows($query1)==0){
   		header('location:forgot-password.php?error=email');
   	}
   	else{
   		//$key = rand();
   		$keys = generateRandomString(10);
       //echo "update email set key='$keys' where roll=".$roll."";
-      $query = mysql_query("update `email` set `key`='$keys' where `roll`='$roll';",$connection);
-  		//$query = mysql_query("update email set key='$keys' where roll='".$roll."'",$connection);
-//  		$query = mysql_query("update email set key=RAND() where email='$email'",$connection);
+      $query = mysqli_query($connection,"update `email` set `key`='$keys' where `roll`='$roll';");
+  		//$query = mysqli_query("update email set key='$keys' where roll='".$roll."'",$connection);
+//  		$query = mysqli_query("update email set key=RAND() where email='$email'",$connection);
   		if($query){
 			//Send mail....
-			$row1 = mysql_fetch_assoc($query1);
+			$row1 = mysqli_fetch_assoc($query1);
 			$url = "https://no-dues.appspot.com/password-reset.php?email=".urlencode($row1['email'])."&key=".$keys;
 			//echo "Mail won't work inside IITG. Please visit this link - ".$url;
 			sendMail($row1['email'].'@iitg.ernet.in',$url);
 		  	header('location:forgot-password.php?error=none');
   		}
   		else{
-        //echo  mysql_error($connection);
+        //echo  mysqli_error($connection);
   			header('location:forgot-password.php?error=connection');
   		}
   		

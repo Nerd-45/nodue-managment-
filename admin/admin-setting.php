@@ -10,15 +10,15 @@
 		header('location:index.php');
 	}
 	if(isset($_POST['password'])){
-		$pass = mysql_real_escape_string(stripslashes($_POST['password']));
-		$pass1 = mysql_real_escape_string(stripslashes($_POST['new-password']));
-		$pass2 = mysql_real_escape_string(stripslashes($_POST['confirm-password']));
+		$pass = mysqli_real_escape_string($connection,stripslashes($_POST['password']));
+		$pass1 = mysqli_real_escape_string($connection,stripslashes($_POST['new-password']));
+		$pass2 = mysqli_real_escape_string($connection,stripslashes($_POST['confirm-password']));
 		$pass = encrypt($pass,ENCRYPTION_KEY);
 		if(strcmp($_SESSION['password'],$pass)==0){
 			if(strcmp($pass1, $pass2)==0){
 				$pass1 = encrypt($pass1,ENCRYPTION_KEY);
 				//$query = mysql_query("update admin set password='".$pass1."' where username='".$_SESSION['username']."'",$connection);
-				$query = mysql_query("update admin set password='$pass1' where username='admin'",$connection);
+				$query = mysqli_query($connection,"update admin set password='$pass1' where username='admin'");
 				/*if(mysql_num_rows($query)!=0){
 					echo 'Hello';
 				}*/

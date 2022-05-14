@@ -31,7 +31,7 @@ ini_set('display_errors', true);
 			$query = mysqli_query($connection, "select * from manager where username='$user' and password='$enc_password'");
 			if(mysqli_num_rows($query)==1)
 			{
-				$row = mysql_fetch_assoc($query);
+				$row = mysqli_fetch_assoc($query);
 				$_SESSION['login_as'] = "manager";
 				$_SESSION['username'] = $user;
 				$_SESSION['password'] = $enc_password;

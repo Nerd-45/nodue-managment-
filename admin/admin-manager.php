@@ -123,18 +123,18 @@
         </tr>
         <?php
           if(isset($_GET['username'])){
-            $r = mysql_real_escape_string(stripslashes($_GET['username']));
+            $r = mysqli_real_escape_string($connection,stripslashes($_GET['username']));
             if(strcmp($r,"")==0){
-              $query1=mysql_query("select * from manager order by name",$connection); 
+              $query1=mysqli_query($connection,"select * from manager order by name"); 
             }
             else{
-              $query1 = mysql_query("select * from manager where username='$r'",$connection);
+              $query1 = mysqli_query($connection,"select * from manager where username='$r'");
             }
           }
           else{
-            $query1=mysql_query("select * from manager order by name",$connection); 
+            $query1=mysqli_query($connection,"select * from manager order by name"); 
           }
-          while($row = mysql_fetch_assoc($query1)){
+          while($row = mysqli_fetch_assoc($query1)){
             echo '
               <tr>
                 <td></td>

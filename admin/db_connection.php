@@ -1,5 +1,5 @@
 <?php
-	use \google\appengine\api\mail\Message;
+	
 	$connection = mysqli_connect('localhost','root','');
 	if(!$connection){
 		die("Connection Failed");

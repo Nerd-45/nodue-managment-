@@ -109,35 +109,35 @@
           <th></th>
           <th>Name</th>
           <th>Roll Number</th>
-          <th>Webmail</th>
+         
           <th>Hostel</th>
           <th></th>
         </tr>
         <?php
           if(isset($_GET['roll'])){
-            $r = mysql_real_escape_string(stripslashes($_GET['roll']));
+            $r = mysqli_real_escape_string($connection ,stripslashes($_GET['roll']));
             if(strcmp($r,"")==0){
-              $query1=mysql_query("select * from student order by roll",$connection); 
-              $query2=mysql_query("select * from email order by roll",$connection);
+              $query1=mysqli_query($connection,"select * from student order by roll"); 
+              $query2=mysqli_query($connection,"select * from email order by roll",);
             }
             else{
-              $query1 = mysql_query("select * from student where roll='$r'",$connection);
-              $query2 = mysql_query("select * from email where roll='$r'",$connection);
+              $query1 = mysqli_query($connection, "select * from student where roll='$r'");
+              $query2 = mysqli_query($connection, "select * from email where roll='$r'");
             }
           }
           else{
-            $query1=mysql_query("select * from student order by roll",$connection); 
-            $query2=mysql_query("select * from email order by roll",$connection);
+            $query1=mysqli_query($connection,"select * from student order by roll"); 
+            $query2=mysqli_query($connection,"select * from email order by roll");
           }
-          while($row = mysql_fetch_assoc($query1)){
-            $row1 = mysql_fetch_assoc($query2);
+          while($row = mysqli_fetch_assoc($query1)){
+            $row1 = mysqli_fetch_assoc($query2);
             echo '
               <tr>
                 <td></td>
                 <td></td>
                 <td>'.$row['name'].'</td>
                 <td>'.$row['roll'].'</td>
-                <td>'.$row1['email'].'</td>
+              
                 <td>'.$row['hostel'].'</td>
                 <td><a class="btn btn-primary" href="admin-remove-student.php?roll='.$row['roll'].'"><span class="glyphicon glyphicon-trash" title="Remove" aria-hidden="true"></span></a></td>
               </tr>
@@ -163,6 +163,8 @@
           }
           else if(strcmp($msg,"invalidRemove")==0){
             $msg = "No such student exists.";
+          } else if (strcmp($msg, "roll") == 0) {
+          $msg = "Invalid roll number.";
           }
           else if(strcmp($msg,"noneRemove")==0){
             $msg = "Delete successful.";

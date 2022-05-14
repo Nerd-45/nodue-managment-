@@ -10,15 +10,15 @@
 		header('location:index.php');
 	}
 	if(isset($_GET['roll'])){
-		$roll = mysql_real_escape_string(stripslashes($_GET['roll']));
-		$query = mysql_query("select * from student where roll='$roll'",$connection);
-		if(mysql_num_rows($query)==1){
+		$roll = mysqli_real_escape_string($connection,stripslashes($_GET['roll']));
+		$query = mysqli_query($connection,"select * from student where roll='$roll'");
+		if(mysqli_num_rows($query)==1){
 			
-			$query = mysql_query("delete from `email` where `roll`='$roll';",$connection);	//weird.
-			$query = mysql_query("delete from `student` where `roll`='$roll';",$connection);
-			$query = mysql_query("delete from `mess_due` where `roll_number`='$roll';",$connection);
-			$query = mysql_query("delete from `hostel_due` where `roll_number`='$roll';",$connection);
-			$query = mysql_query("delete from `other_due` where `roll_number`='$roll';",$connection);
+			$query = mysqli_query($connection,"delete from `email` where `roll`='$roll';");	//weird.
+			$query = mysqli_query($connection,"delete from `student` where `roll`='$roll';");
+			$query = mysqli_query($connection,"delete from `mess_due` where `roll_number`='$roll';");
+			$query = mysqli_query($connection,"delete from `hostel_due` where `roll_number`='$roll';");
+			$query = mysqli_query($connection,"delete from `other_due` where `roll_number`='$roll';");
 			header("location:admin-student.php?error=noneRemove");
 		}
 		else{

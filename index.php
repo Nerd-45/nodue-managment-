@@ -68,7 +68,7 @@ ini_set('display_errors', true);
       </form>
       <div align="center">
         <h5><a href="admin/index.php">Admin or Manager Login?</a></h5>
-        <h5><a href="forgot-password.php">Forgot Password?</a></h5>
+        
     </div> 
     <!--Signin Form ends-->
 

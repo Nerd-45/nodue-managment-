@@ -40,6 +40,9 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<style> 
+	*{overflow:hidden}
+   </style>
   </head>
 
   <body>
@@ -115,19 +118,19 @@
 				$flag=1;
 				$query1="";
 				if(strcasecmp($_SESSION['role'],"other")==0){
-					$query1=mysql_query("select * from other_due where added_by='".$_SESSION['name']."' order by roll_number",$connection);
+					$query1=mysqli_query($connection,"select * from other_due where added_by='".$_SESSION['name']."' order by roll_number");
 				}
 				else if(strcasecmp($_SESSION['role'],"mess")==0){
-					$query1=mysql_query("select * from mess_due where added_by='".$_SESSION['name']."' order by roll_number",$connection);
+					$query1=mysqli_query($connection,"select * from mess_due where added_by='".$_SESSION['name']."' order by roll_number");
 				}
 				else if(strcasecmp($_SESSION['role'],"hostel")==0){
-					$query1=mysql_query("select * from hostel_due where added_by='".$_SESSION['name']."' order by roll_number",$connection);
+					$query1=mysqli_query($connection,"select * from hostel_due where added_by='".$_SESSION['name']."' order by roll_number");
 				}
 				else{
 					$flag=0;
 				}
-				if($flag==1&&mysql_num_rows($query1)!=0){
-					while($row = mysql_fetch_assoc($query1)){
+				if($flag==1&&mysqli_num_rows($query1)!=0){
+					while($row = mysqli_fetch_assoc($query1)){
 						echo '
 							<tr>
 								<td></td>

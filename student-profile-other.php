@@ -9,7 +9,7 @@
 	$due = 0;
 	$query = mysqli_query($connection, "select * from other_due where roll_number='".$_SESSION['roll']."'");
 	if(mysqli_num_rows($query)==1){
-		$row = mysql_fetch_assoc($query);
+		$row = mysqli_fetch_assoc($query);
 		$due = 1;
 	}
 ?>

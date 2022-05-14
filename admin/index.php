@@ -72,7 +72,7 @@ ini_set('display_errors', true);
       </form>
       <div align="center">
         <h5><a href="../index.php">Student Login?</a></h5>
-        <h5><a href="forgot-password.php">Manager - Forgot Password?</a></h5>
+       
       </div> 
 
     </div> 

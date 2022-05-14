@@ -17,6 +17,9 @@ ini_set('display_errors', true);
 		$pass1=mysqli_real_escape_string($connection, stripslashes($_POST['confirm-password']));
 		$hostel=mysqli_real_escape_string($connection, stripslashes($_POST['hostel']));
 		$email = mysqli_real_escape_string($connection, stripslashes($_POST['email']));
+		if($roll<=207600 || $roll>=207699){ // 208999
+		header('location:admin-student.php?error=roll');
+	} else{
 		if(strcmp($pass,$pass1)==0){
 			$pass = encrypt($pass,ENCRYPTION_KEY);
 			$query = mysqli_query($connection, "select * from student where roll='$roll'");
@@ -46,5 +49,7 @@ ini_set('display_errors', true);
 		else{
 			header('location:admin-student.php?error=match');
 		}
+
 	}
+}
 ?>

@@ -10,17 +10,17 @@
 		header('location:index.php');
 	}
 	if(isset($_POST['submit'])){
-		$roll = mysql_real_escape_string(stripslashes($_POST['roll']));
-		$amount = mysql_real_escape_string(stripslashes($_POST['amount']));
-		$reason = mysql_real_escape_string(stripslashes($_POST['reason']));
-		$student_query = mysql_query("select * from student where roll='$roll'",$connection);
-		if(mysql_num_rows($student_query)!=1){
+		$roll = mysqli_real_escape_string($connection,stripslashes($_POST['roll']));
+		$amount = mysqli_real_escape_string($connection, stripslashes($_POST['amount']));
+		$reason = mysqli_real_escape_string($connection, stripslashes($_POST['reason']));
+		$student_query = mysqli_query($connection, "select * from student where roll='$roll'");
+		if(mysqli_num_rows($student_query)!=1){
 			header('location:admin-profile-hostel.php?error=roll');
 		}
 		else{
-			$query = mysql_query("select * from hostel_due where roll_number='$roll'",$connection);
-			if(mysql_num_rows($query)==0){
-				$query = mysql_query("insert into hostel_due (roll_number,due_amount,added_by,added_on,reason) values ('".$roll."','".$amount."','".$_SESSION['name']."',NOW(),'".$reason."')",$connection);
+			$query = mysqli_query($connection, "select * from hostel_due where roll_number='$roll'");
+			if(mysqli_num_rows($query)==0){
+				$query = mysqli_query($connection, "insert into hostel_due (roll_number,due_amount,added_by,added_on,reason) values ('".$roll."','".$amount."','".$_SESSION['name']."',NOW(),'".$reason."')");
 				if($query){
 					header('location:admin-profile-hostel.php?error=none');
 				}
@@ -29,7 +29,7 @@
 				}
 			}
 			else{
-				$query = mysql_query("update hostel_due set due_amount=due_amount+'$amount', added_by='".$_SESSION['name']."', added_on=NOW(), reason='$reason' where roll_number='$roll'",$connection);
+				$query = mysqli_query($connection, "update hostel_due set due_amount=due_amount+'$amount', added_by='".$_SESSION['name']."', added_on=NOW(), reason='$reason' where roll_number='$roll'");
 				if($query){
 					header('location:admin-profile-hostel.php?error=none');
 				}

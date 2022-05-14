@@ -10,25 +10,25 @@
 		header('location:index.php');
 	}
 	if(isset($_POST['submit'])){
-		$name=mysql_real_escape_string(stripslashes($_POST['name']));
-		$username=mysql_real_escape_string(stripslashes($_POST['username']));
-		$pass=mysql_real_escape_string(stripslashes($_POST['password']));
-		$pass1=mysql_real_escape_string(stripslashes($_POST['confirm-password']));
-		$hostel=mysql_real_escape_string(stripslashes($_POST['hostel']));
-		$role=mysql_real_escape_string(stripslashes($_POST['role']));
+		$name=mysqli_real_escape_string($connection,stripslashes($_POST['name']));
+		$username=mysqli_real_escape_string($connection,stripslashes($_POST['username']));
+		$pass=mysqli_real_escape_string($connection,stripslashes($_POST['password']));
+		$pass1=mysqli_real_escape_string($connection,stripslashes($_POST['confirm-password']));
+		$hostel=mysqli_real_escape_string($connection,stripslashes($_POST['hostel']));
+		$role=mysqli_real_escape_string($connection,stripslashes($_POST['role']));
 		if(strcmp($pass,$pass1)==0){
 			$pass = encrypt($pass,ENCRYPTION_KEY);
-			$query = mysql_query("select * from manager where username='$username'",$connection);
-			if(mysql_num_rows($query)==0){
+			$query = mysqli_query($connection,"select * from manager where username='$username'");
+			if(mysqli_num_rows($query)==0){
 				if(strcmp($role,"other")==0){
 					$hostel = "none";
 				}
 				$keys = generateRandomString(10);
 
-				$query = mysql_query("insert into manager (name,username,password,role,hostel) values ('".$name."','".$username."','".$pass."','".$role."','".$hostel."')",$connection);
-				$query = mysql_query("insert into `admin_email` (`email`,`key`) values ('".$username."','".$keys."');",$connection);
+				$query = mysqli_query($connection,"insert into manager (name,username,password,role,hostel) values ('".$name."','".$username."','".$pass."','".$role."','".$hostel."')");
+				$query = mysqli_query($connection,"insert into `admin_email` (`email`,`key`) values ('".$username."','".$keys."');");
 				if($query){
-					confirmMail($username.'@iitg.ernet.in');
+					
 					header('location:admin-manager.php?error=none');
 				}
 				else{

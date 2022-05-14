@@ -1,7 +1,6 @@
 <?php
 	include('db_connection.php');
-	if(session_id()==""){
-		session_start();
+	if(session_id()==""){    // 123456     // 789101112 		session_start();
 	}
 	if(isset($_SESSION['login_as'])&&strcmp($_SESSION['login_as'],"admin")==0){
    		header('location:admin-profile.php');
@@ -10,10 +9,10 @@
     	header('location:manager-profile.php');
   	}
   	if(isset($_GET['email'])&&isset($_GET['key'])){
-  		$email = mysql_real_escape_string(stripslashes($_GET['email']));
- 		$key = mysql_real_escape_string(stripslashes($_GET['key']));
-  		$query = mysql_query("select * from `admin_email` where `email`='$email' and `key`='$key';",$connection);
-  		if(mysql_num_rows($query)==0){
+  		$email = mysqli_real_escape_string($connection,stripslashes($_GET['email']));
+ 		$key = mysqli_real_escape_string($connection,stripslashes($_GET['key']));
+  		$query = mysqli_query($connection,"select * from `admin_email` where `email`='$email' and `key`='$key';",$connection);
+  		if(mysqli_num_rows($query)==0){
 	  		/*echo $email;
 	  		echo "<br>";
 	  		echo $key;
@@ -21,7 +20,7 @@
 	  		header('location:index.php');
   		}
   		else{
-  			$row = mysql_fetch_assoc($query);
+  			$row = mysqli_fetch_assoc($query);
   		}
   	}
 ?>

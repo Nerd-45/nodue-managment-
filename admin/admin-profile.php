@@ -122,25 +122,25 @@
 			</tr>
 			<?php
 				if(isset($_GET['roll'])){
-					$r = mysql_real_escape_string(stripslashes($_GET['roll']));
-					$m = mysql_real_escape_string(stripslashes($_GET['manager']));
+					$r = mysqli_real_escape_string($connection,stripslashes($_GET['roll']));
+					$m = mysqli_real_escape_string($connection,stripslashes($_GET['manager']));
 					if(strcmp($r,"")==0&&strcmp($m,"")==0){
-						$query1=mysql_query("select * from mess_due order by roll_number",$connection); 
+						$query1=mysqli_query($connection,"select * from mess_due order by roll_number"); 
 					}
 					else if(strcmp($r,"")!=0&&strcmp($m,"")!=0){
-						$query1=mysql_query("select * from mess_due where roll_number='$r' and added_by='$m' order by added_on",$connection);	
+						$query1=mysqli_query($connection,"select * from mess_due where roll_number='$r' and added_by='$m' order by added_on");	
 					}
 					else if(strcmp($m,"")!=0){
-						$query1=mysql_query("select * from mess_due where added_by='$m' order by roll_number",$connection);
+						$query1=mysqli_query($connection,"select * from mess_due where added_by='$m' order by roll_number");
 					}
 					else{
-						$query1 = mysql_query("select * from mess_due where roll_number='$r' order by added_on",$connection);
+						$query1 = mysqli_query($connection,"select * from mess_due where roll_number='$r' order by added_on");
 					}
 				}
 				else{
-					$query1=mysql_query("select * from mess_due order by roll_number",$connection);	
+					$query1=mysqli_query($connection,"select * from mess_due order by roll_number");	
 				}
-				while($row = mysql_fetch_assoc($query1)){
+				while($row = mysqli_fetch_assoc($query1)){
 					echo '
 						<tr>
 							<td></td>
